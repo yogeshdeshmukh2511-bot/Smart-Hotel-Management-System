@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Guest</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'hotel/style.css' %}">
+</head>
+
+<body>
+
+    <nav>
+        <a href="/">HOME</a>
+        <a href="/rooms/">ROOMS</a>
+        <a href="/guests/">GUESTS</a>
+        <a href="/bookings/">BOOKINGS</a>
+        <a href="/admin/">ADMIN</a>
+    </nav>
+
+    <h1>Add New Guest</h1>
+
+    <div class="card">
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <p>
+                <label>Name:</label>
+                <input type="text" name="name" required>
+            </p>
+
+            <p>
+                <label>Phone:</label>
+                <input type="text" name="phone" required>
+            </p>
+
+            <p>
+                <label>Email:</label>
+                <input type="email" name="email" required>
+            </p>
+
+            <p>
+                <label>Address:</label>
+                <textarea name="address" required></textarea>
+            </p>
+
+            <button type="submit">Add Guest</button>
+
+        </form>
+
+    </div>
+
+</body>
+</html>

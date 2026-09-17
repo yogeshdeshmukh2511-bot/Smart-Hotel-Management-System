@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Room</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'hotel/style.css' %}">
+</head>
+
+<body>
+
+    <nav>
+        <a href="/">HOME</a>
+        <a href="/rooms/">ROOMS</a>
+        <a href="/admin/">ADMIN</a>
+    </nav>
+
+    <h1>Add New Room</h1>
+
+    <div class="card">
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <p>
+                <label>Room Number:</label>
+                <input type="text" name="room_number" required>
+            </p>
+
+            <p>
+                <label>Room Type:</label>
+                <select name="room_type" required>
+                    <option value="">Select Type</option>
+                    <option value="Single">Single</option>
+                    <option value="Double">Double</option>
+                    <option value="Deluxe">Deluxe</option>
+                    <option value="Suite">Suite</option>
+                </select>
+            </p>
+
+            <p>
+                <label>Price:</label>
+                <input type="number" name="price" required>
+            </p>
+
+            <p>
+                <label>Status:</label>
+                <select name="status" required>
+                    <option value="Available">Available</option>
+                    <option value="Booked">Booked</option>
+                    <option value="Maintenance">Maintenance</option>
+                </select>
+            </p>
+
+            <button type="submit">Add Room</button>
+
+        </form>
+
+    </div>
+
+</body>
+</html>

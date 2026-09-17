@@ -1,0 +1,289 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Hotel Management System</title>
+
+    <link rel="stylesheet" href="{% static 'hotel/style.css' %}">
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar">
+
+    <div class="logo">
+        🏨 Smart Hotel
+    </div>
+
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="{% url 'rooms' %}">Rooms</a>
+        <a href="{% url 'guests' %}">Guests</a>
+        <a href="{% url 'bookings' %}">Bookings</a>
+        <a href="{% url 'gallery' %}">Gallery</a>
+        <a href="/admin/">Admin</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+
+</nav>
+
+
+<!-- Hero Section -->
+<section class="hero">
+
+    <div class="hero-content">
+
+        <h1>Welcome to Smart Hotel</h1>
+
+        <p>
+            Manage rooms, guests and bookings easily
+            from one place.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="{% url 'rooms' %}" class="btn">
+                View Rooms
+            </a>
+
+            <a href="{% url 'bookings' %}" class="btn btn-outline">
+                Manage Bookings
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- Welcome -->
+<div class="welcome">
+
+    <h2>
+        Welcome, {{ request.user.username }} 👋
+    </h2>
+
+    <p>
+        Here is your hotel management dashboard.
+    </p>
+
+</div>
+
+
+<!-- Dashboard Cards -->
+<section class="dashboard">
+
+    <a href="{% url 'rooms' %}" class="card-link">
+        <div class="card">
+
+            <div class="card-icon">🛏️</div>
+
+            <h2>Available Rooms</h2>
+
+            <h3>{{ available_rooms }}</h3>
+
+            <p>Rooms available for booking</p>
+
+        </div>
+    </a>
+
+
+    <a href="{% url 'rooms' %}" class="card-link">
+        <div class="card">
+
+            <div class="card-icon">📅</div>
+
+            <h2>Booked Rooms</h2>
+
+            <h3>{{ booked_rooms }}</h3>
+
+            <p>Currently booked rooms</p>
+
+        </div>
+    </a>
+
+
+    <div class="card">
+
+        <div class="card-icon">🔧</div>
+
+        <h2>Maintenance</h2>
+
+        <h3>{{ maintenance_rooms }}</h3>
+
+        <p>Rooms under maintenance</p>
+
+    </div>
+
+
+    <a href="{% url 'guests' %}" class="card-link">
+        <div class="card">
+
+            <div class="card-icon">👥</div>
+
+            <h2>Total Guests</h2>
+
+            <h3>{{ guests|length }}</h3>
+
+            <p>Registered hotel guests</p>
+
+        </div>
+    </a>
+
+
+    <a href="{% url 'bookings' %}" class="card-link">
+        <div class="card">
+
+            <div class="card-icon">📋</div>
+
+            <h2>Total Bookings</h2>
+
+            <h3>{{ bookings|length }}</h3>
+
+            <p>All hotel bookings</p>
+
+        </div>
+    </a>
+
+
+    <a href="/booking-history/?status=Completed" class="card-link">
+        <div class="card">
+
+            <div class="card-icon">✅</div>
+
+            <h2>Completed</h2>
+
+            <h3>{{ completed_bookings }}</h3>
+
+            <p>Completed bookings</p>
+
+        </div>
+    </a>
+
+
+    <a href="/booking-history/?status=Cancelled" class="card-link">
+        <div class="card">
+
+            <div class="card-icon">❌</div>
+
+            <h2>Cancelled</h2>
+
+            <h3>{{ cancelled_bookings }}</h3>
+
+            <p>Cancelled bookings</p>
+
+        </div>
+    </a>
+
+
+    <a href="{% url 'booking_history' %}" class="card-link">
+        <div class="card">
+
+            <div class="card-icon">📖</div>
+
+            <h2>Booking History</h2>
+
+            <h3>→</h3>
+
+            <p>View booking history</p>
+
+        </div>
+    </a>
+
+
+    <div class="card revenue-card">
+
+        <div class="card-icon">💰</div>
+
+        <h2>Total Revenue</h2>
+
+        <h3>₹{{ total_revenue }}</h3>
+
+        <p>Hotel revenue</p>
+
+    </div>
+
+</section>
+
+
+<!-- Recent Bookings -->
+<section class="recent-section">
+
+    <div class="section-title">
+
+        <h2>Recent Bookings</h2>
+
+        <a href="{% url 'bookings' %}">
+            View All
+        </a>
+
+    </div>
+
+
+    <div class="booking-grid">
+
+        {% for booking in recent_bookings %}
+
+        <div class="booking-card">
+
+            <h3>{{ booking.guest.name }}</h3>
+
+            <p>
+                <strong>Room:</strong>
+                {{ booking.room.room_number }}
+            </p>
+
+            <p>
+                <strong>Check-in:</strong>
+                {{ booking.check_in }}
+            </p>
+
+            <p>
+                <strong>Check-out:</strong>
+                {{ booking.check_out }}
+            </p>
+
+            <p>
+                <strong>Total:</strong>
+                ₹{{ booking.total_amount }}
+            </p>
+
+            <span class="status">
+                {{ booking.status }}
+            </span>
+
+        </div>
+
+        {% empty %}
+
+        <p>No recent bookings.</p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- Footer -->
+<footer>
+
+    <p>
+        © 2026 Smart Hotel Management System
+    </p>
+
+    <p>
+        Hotel Management made simple.
+    </p>
+
+</footer>
+
+
+</body>
+</html>

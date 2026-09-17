@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - Hotel Management System</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'hotel/style.css' %}">
+</head>
+
+<body>
+
+    <h1>Smart Hotel Management System</h1>
+
+    <div class="card">
+        <h2>Login</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <p>
+                <label>Username:</label>
+                <input type="text" name="username" required>
+            </p>
+
+            <p>
+                <label>Password:</label>
+                <input type="password" name="password" required>
+            </p>
+
+            <p>
+                <button type="submit">Login</button>
+            </p>
+        </form>
+    </div>
+
+</body>
+</html>

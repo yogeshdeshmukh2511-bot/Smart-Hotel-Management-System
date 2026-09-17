@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Room</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'hotel/style.css' %}">
+</head>
+
+<body>
+
+    <nav>
+        <a href="/">HOME</a>
+        <a href="/rooms/">ROOMS</a>
+        <a href="/admin/">ADMIN</a>
+    </nav>
+
+    <h1>Edit Room</h1>
+
+    <div class="card">
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <p>
+                <label>Room Number:</label>
+                <input type="text" name="room_number"
+                       value="{{ room.room_number }}" required>
+            </p>
+
+            <p>
+                <label>Room Type:</label>
+                <select name="room_type" required>
+                    <option value="Single" {% if room.room_type == "Single" %}selected{% endif %}>Single</option>
+                    <option value="Double" {% if room.room_type == "Double" %}selected{% endif %}>Double</option>
+                    <option value="Deluxe" {% if room.room_type == "Deluxe" %}selected{% endif %}>Deluxe</option>
+                    <option value="Suite" {% if room.room_type == "Suite" %}selected{% endif %}>Suite</option>
+                </select>
+            </p>
+
+            <p>
+                <label>Price:</label>
+                <input type="number" name="price"
+                       value="{{ room.price }}" required>
+            </p>
+
+            <p>
+                <label>Status:</label>
+                <select name="status" required>
+                    <option value="Available" {% if room.status == "Available" %}selected{% endif %}>Available</option>
+                    <option value="Booked" {% if room.status == "Booked" %}selected{% endif %}>Booked</option>
+                    <option value="Maintenance" {% if room.status == "Maintenance" %}selected{% endif %}>Maintenance</option>
+                </select>
+            </p>
+
+            <button type="submit">Update Room</button>
+
+        </form>
+
+    </div>
+
+</body>
+</html>

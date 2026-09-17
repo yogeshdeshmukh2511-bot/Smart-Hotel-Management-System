@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Guests</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'hotel/style.css' %}">
+</head>
+
+<body>
+
+    <nav>
+        <a href="/">HOME</a>
+        <a href="/rooms/">ROOMS</a>
+        <a href="/guests/">GUESTS</a>
+        <a href="/admin/">ADMIN</a>
+    </nav>
+
+    <h1>Hotel Guests</h1>
+    <form method="GET">
+    <input type="text"
+           name="search"
+           placeholder="Search guest..."
+           value="{{ search }}">
+    <button type="submit">Search</button>
+</form>
+    <a href="{% url 'add_guest' %}">
+    <button>Add Guest</button>
+</a>
+
+    <div class="room-list">
+
+        {% for guest in guests %}
+
+        <div class="card">
+            <h2>{{ guest.name }}</h2>
+
+            <p>Phone: {{ guest.phone }}</p>
+            <p>Email: {{ guest.email }}</p>
+            <p>Address: {{ guest.address }}</p>
+            <a href="{% url 'edit_guest' guest.id %}">
+    <button>Edit</button>
+</a>
+<form method="POST"
+      action="{% url 'delete_guest' guest.id %}"
+      style="display:inline;"
+      onsubmit="return confirm('Are you sure you want to delete this guest?');">
+
+    {% csrf_token %}
+
+    <button type="submit">Delete</button>
+
+</form>
+        </div>
+
+        {% empty %}
+
+        <p>No guests available.</p>
+
+        {% endfor %}
+
+    </div>
+
+</body>
+</html>

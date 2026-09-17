@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Smart Hotel Management System</title>
+    {% load static %}
+<link rel="stylesheet" href="{% static 'hotel/style.css' %}">
+</head>
+
+<body>
+   <nav> 
+    <a href="/">HOME</a> 
+    <a href="/admin/">ADMIN</a> 
+    <a href="/gallery/">GALLERY</a>
+    <a href="{% url 'logout' %}">LOGOUT</a> 
+</nav>
+
+    <h1> Smart Hotel Management System</h1>
+    <p>Welcome, {{ request.user.username }} 👋</p>
+    <div class="dashboard">
+
+    <a href="{% url 'rooms' %}" class="card-link">
+    <div class="card">
+        <h2>Rooms</h2>
+        <h3>{{ available_rooms }}</h3>
+       <p>Available Rooms</p>
+    </div>
+    <a href="{% url 'rooms' %}" class="card-link">
+    <div class="card">
+        <h2>Booked</h2>
+        <h3>{{ booked_rooms }}</h3>
+        <p>Booked Rooms</p>
+    </div>
+    <div class="card">
+    <h2>Maintenance</h2>
+    <h3>{{ maintenance_rooms }}</h3>
+</div>
+</a>
+    <h2>Recent Bookings</h2>
+
+<div class="room-list">
+
+    {% for booking in recent_bookings %}
+
+    <div class="card">
+
+        <h3>{{ booking.guest.name }}</h3>
+
+        <p>Room: {{ booking.room.room_number }}</p>
+
+        <p>Check-in: {{ booking.check_in }}</p>
+
+        <p>Check-out: {{ booking.check_out }}</p>
+
+        <p>Total: ₹{{ booking.total_amount }}</p>
+
+        <p>Status: {{ booking.status }}</p>
+
+    </div>
+
+    {% empty %}
+
+    <p>No recent bookings.</p>
+
+    {% endfor %}
+
+</div>
+</a>
+<a href="{% url 'guests' %}" class="card-link">
+    <div class="card">
+        <h2>Guests</h2>
+        <h3>{{ guests|length }}</h3>
+        <p>Total Guests</p>
+    </div>
+
+    <a href="{% url 'bookings' %}" class="card-link">
+    <div class="card">
+        <h2>Bookings</h2>
+        <h3>{{ bookings|length }}</h3>
+        <p>Total Bookings</p>
+    </div>
+</a>
+<a href="/booking-history/?status=Cancelled" class="card-link">
+
+    <div class="card">
+
+        <h2>Cancelled</h2>
+
+        <h3>{{ cancelled_bookings }}</h3>
+
+        <p>Cancelled Bookings</p>
+
+    </div>
+
+</a>
+<a href="/booking-history/?status=Completed" class="card-link">
+    <div class="card">
+        <h2>Completed</h2>
+        <h3>{{ completed_bookings }}</h3>
+        <p>Completed Bookings</p>
+    </div>
+</a>
+<a href="{% url 'booking_history' %}" class="card-link">
+
+    <div class="card">
+
+        <h2>History</h2>
+
+        <h3>📋</h3>
+
+        <p>Booking History</p>
+
+    </div>
+
+</a>
+<a href="#" class="card-link">
+    <div class="card">
+        <h2>Revenue</h2>
+        <h3>₹{{ total_revenue }}</h3>
+        <p>Total Revenue</p>
+    </div>
+</a>
+
+</div>
+
+    <h2>Rooms</h2>
+
+    {% for room in rooms %}
+        <p>
+            Room {{ room.room_number }} |
+            {{ room.room_type }} |
+            ₹{{ room.price }} |
+            {{ room.status }}
+        </p>
+    {% empty %}
+        <p>No rooms available.</p>
+    {% endfor %}
+
+
+    <h2>Guests</h2>
+
+    {% for guest in guests %}
+        <p>
+            {{ guest.name }} |
+            {{ guest.phone }} |
+            {{ guest.email }}
+        </p>
+    {% empty %}
+        <p>No guests available.</p>
+    {% endfor %}
+
+
+    <h2>Bookings</h2>
+
+    {% for booking in bookings %}
+        <p>
+            {{ booking.guest.name }} |
+            Room {{ booking.room.room_number }} |
+            {{ booking.check_in }} to {{ booking.check_out }} |
+            ₹{{ booking.total_amount }} |
+            {{ booking.status }}
+        </p>
+    {% empty %}
+        <p>No bookings available.</p>
+    {% endfor %}
+
+</body>
+</html>

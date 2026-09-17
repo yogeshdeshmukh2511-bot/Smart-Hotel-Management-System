@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+
+<title>Booking History - Smart Hotel</title>
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'hotel/style.css' %}">
+
+<style>
+
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f6f8;
+        margin: 0;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 1100px;
+        margin: 30px auto;
+    }
+
+    .section {
+        background: white;
+        padding: 25px;
+        margin-bottom: 25px;
+        border-radius: 12px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .booking-card {
+        background: #f9fafb;
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin-bottom: 15px;
+        border-radius: 10px;
+    }
+
+    .booking-card h3 {
+        margin-top: 0;
+        color: #1f2937;
+    }
+
+    .booking-card p {
+        background: none;
+        box-shadow: none;
+        margin: 8px 0;
+        padding: 5px;
+    }
+
+    .status {
+        font-weight: bold;
+    }
+    .status-booked {
+    color: green;
+    font-weight: bold;
+}
+
+.status-cancelled {
+    color: red;
+    font-weight: bold;
+}
+
+.status-completed {
+    color: blue;
+    font-weight: bold;
+}
+
+    .filter {
+        margin-bottom: 20px;
+    }
+
+    select {
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    button {
+        padding: 10px 18px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #1d4ed8;
+    }
+
+</style>
+
+
+</head>
+
+<body>
+
+
+<nav>
+
+    <a href="/">HOME</a>
+    <a href="/rooms/">ROOMS</a>
+    <a href="/guests/">GUESTS</a>
+    <a href="/bookings/">BOOKINGS</a>
+    <a href="/booking-history/">HISTORY</a>
+    <a href="/admin/">ADMIN</a>
+
+</nav>
+
+
+<h1>📋 Booking History</h1>
+
+
+<div class="container">
+
+
+    <!-- FILTER SECTION -->
+
+    <div class="section">
+
+        <h2>Filter Booking History</h2>
+
+        <form method="GET">
+
+            <div class="filter">
+
+                <select name="status">
+
+                    <option value="">
+                        All Bookings
+                    </option>
+
+
+                    <option value="Booked"
+                        {% if request.GET.status == "Booked" %}
+                            selected
+                        {% endif %}
+                    >
+                        Booked
+                    </option>
+
+
+                    <option value="Cancelled"
+                        {% if request.GET.status == "Cancelled" %}
+                            selected
+                        {% endif %}
+                    >
+                        Cancelled
+                    </option>
+
+
+                    <option value="Completed"
+                        {% if request.GET.status == "Completed" %}
+                            selected
+                        {% endif %}
+                    >
+                        Completed
+                    </option>
+
+                </select>
+
+
+                <button type="submit">
+                    Filter
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- BOOKING RECORDS -->
+
+    <div class="section">
+
+        <h2>All Booking Records</h2>
+
+
+        {% for booking in bookings %}
+
+            <div class="booking-card">
+
+                <h3>
+                    {{ booking.guest.name }}
+                </h3>
+
+
+                <p>
+                    <strong>Room:</strong>
+                    {{ booking.room.room_number }}
+                </p>
+
+
+                <p>
+                    <strong>Check-in:</strong>
+                    {{ booking.check_in }}
+                </p>
+
+
+                <p>
+                    <strong>Check-out:</strong>
+                    {{ booking.check_out }}
+                </p>
+
+
+                <p>
+                    <strong>Total Amount:</strong>
+                    ₹{{ booking.total_amount }}
+                </p>
+
+
+                <div class="status">
+    <strong>Booking Status:</strong>
+
+    {% if booking.status == "Booked" %}
+        <span class="status-booked">🟢 BOOKED</span>
+
+    {% elif booking.status == "Cancelled" %}
+        <span class="status-cancelled">🔴 CANCELLED</span>
+
+    {% elif booking.status == "Completed" %}
+        <span class="status-completed">🔵 COMPLETED</span>
+
+    {% endif %}
+</div><div class="status">
+    <strong>Booking Status:</strong>
+
+    {% if booking.status == "Booked" %}
+        <span class="status-booked">🟢 BOOKED</span>
+
+    {% elif booking.status == "Cancelled" %}
+        <span class="status-cancelled">🔴 CANCELLED</span>
+
+    {% elif booking.status == "Completed" %}
+        <span class="status-completed">🔵 COMPLETED</span>
+
+    {% endif %}
+</div>
+
+                <p>
+
+                    <strong>Booking Date:</strong>
+
+                    {{ booking.created_at|date:"d-m-Y H:i" }}
+
+                </p>
+                <a href="{% url 'invoice' booking.id %}">
+    <button type="button">🧾 Invoice</button>
+</a>
+
+            </div>
+
+
+        {% empty %}
+
+            <p>
+                No booking history found.
+            </p>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

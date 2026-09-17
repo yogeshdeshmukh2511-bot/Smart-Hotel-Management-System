@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Guest</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'hotel/style.css' %}">
+</head>
+
+<body>
+
+    <nav>
+        <a href="/">HOME</a>
+        <a href="/rooms/">ROOMS</a>
+        <a href="/guests/">GUESTS</a>
+        <a href="/bookings/">BOOKINGS</a>
+        <a href="/admin/">ADMIN</a>
+    </nav>
+
+    <h1>Edit Guest</h1>
+
+    <div class="card">
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <p>
+                <label>Name:</label>
+                <input type="text" name="name"
+                       value="{{ guest.name }}" required>
+            </p>
+
+            <p>
+                <label>Phone:</label>
+                <input type="text" name="phone"
+                       value="{{ guest.phone }}" required>
+            </p>
+
+            <p>
+                <label>Email:</label>
+                <input type="email" name="email"
+                       value="{{ guest.email }}" required>
+            </p>
+
+            <p>
+                <label>Address:</label>
+                <textarea name="address" required>{{ guest.address }}</textarea>
+            </p>
+
+            <button type="submit">Update Guest</button>
+
+        </form>
+
+    </div>
+
+</body>
+</html>

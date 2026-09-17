@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Booking Invoice - Smart Hotel</title>
+
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'hotel/style.css' %}">
+
+<style>
+    .invoice {
+        width: 700px;
+        margin: 40px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    }
+
+    .invoice-header {
+        text-align: center;
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+    }
+
+    .invoice-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .total {
+        font-size: 22px;
+        font-weight: bold;
+        text-align: right;
+        margin-top: 20px;
+    }
+
+    .print-btn {
+        text-align: center;
+        margin-top: 25px;
+    }
+
+    @media print {
+        .print-btn,
+        nav {
+            display: none;
+        }
+
+        .invoice {
+            box-shadow: none;
+            margin: 0 auto;
+        }
+    }
+</style>
+
+
+</head>
+
+<body>
+
+<nav>
+    <a href="/">HOME</a>
+    <a href="/bookings/">BOOKINGS</a>
+    <a href="/booking-history/">HISTORY</a>
+</nav>
+
+<div class="invoice">
+
+    <div class="invoice-header">
+        <h1>Smart Hotel Management System</h1>
+        <h2>Booking Invoice</h2>
+    </div>
+
+    <div class="invoice-row">
+        <strong>Guest Name:</strong>
+        <span>{{ booking.guest.name }}</span>
+    </div>
+
+    <div class="invoice-row">
+        <strong>Phone:</strong>
+        <span>{{ booking.guest.phone }}</span>
+    </div>
+
+    <div class="invoice-row">
+        <strong>Email:</strong>
+        <span>{{ booking.guest.email }}</span>
+    </div>
+
+    <div class="invoice-row">
+        <strong>Room:</strong>
+        <span>{{ booking.room.room_number }}</span>
+    </div>
+
+    <div class="invoice-row">
+        <strong>Room Type:</strong>
+        <span>{{ booking.room.room_type }}</span>
+    </div>
+
+    <div class="invoice-row">
+        <strong>Check-in:</strong>
+        <span>{{ booking.check_in }}</span>
+    </div>
+
+    <div class="invoice-row">
+        <strong>Check-out:</strong>
+        <span>{{ booking.check_out }}</span>
+    </div>
+
+    <div class="invoice-row">
+        <strong>Status:</strong>
+        <span>{{ booking.status }}</span>
+    </div>
+
+    <div class="total">
+        Total Amount: ₹{{ booking.total_amount }}
+    </div>
+
+    <div class="print-btn">
+        <button onclick="window.print()">🖨️ Print Invoice</button>
+    </div>
+
+</div>
+
+
+</body>
+
+</html>
