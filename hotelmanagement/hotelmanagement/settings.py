@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-gqf+f3r^$kgg!-@%_iunq13ciq2$+-md!!^$46v695ni8@@z(3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["smart-hotel-management-system-1.onrender.com"]
 
 
 # Application definition
